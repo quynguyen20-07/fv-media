@@ -117,7 +117,7 @@ const CardFooter = ({ post }) => {
       </div>
       {isShare && (
         <ShareModal
-          url={`${process.env.MONGODB_URL}/post/${post._id}`}
+          url={`${process.env.REACT_APP_BASE_URL}/post/${post._id}`}
           theme={theme}
         />
       )}

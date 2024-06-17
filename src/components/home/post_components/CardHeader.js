@@ -48,7 +48,9 @@ const CardHeader = ({ post }) => {
     return history.push('/')
   }
   const handleCopyPost = () => {
-    navigator.clipboard.writeText(`${process.env.MONGODB_URL}/post/${post._id}`)
+    navigator.clipboard.writeText(
+      `${process.env.REACT_APP_BASE_URL}/post/${post._id}`
+    )
   }
 
   return (

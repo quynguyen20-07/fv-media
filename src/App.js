@@ -1,44 +1,41 @@
-import React, { useEffect } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import io from 'socket.io-client';
-import Peer from 'peerjs';
+import React, { useEffect } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import io from 'socket.io-client'
+import Peer from 'peerjs'
 
-import Home from "../src/pages/home";
-import Login from "../src/pages/login";
-import Register from '../src/pages/register';
-import SocketClient from '../src/SocketClient';
-import CallModal from '../src/components/message/CallModal';
+import Home from '../src/pages/home'
+import Login from '../src/pages/login'
+import Register from '../src/pages/register'
+import SocketClient from '../src/SocketClient'
+import CallModal from '../src/components/message/CallModal'
 
+import PageRender from './userRouter/PageRender'
+import PrivateRouter from './userRouter/PrivateRouter'
 
-import PageRender from "./userRouter/PageRender";
-import PrivateRouter from "./userRouter/PrivateRouter"
+import Alert from './components/alerts/Alert'
+import Navbar from './components/header/Navbar'
+import StatusModal from './components/StatusModal'
 
-import Alert from "./components/alerts/Alert";
-import Navbar from "./components/header/Navbar";
-import StatusModal from "./components/StatusModal";
+import { refreshToken } from './redux/actions/authAction'
 
-import { refreshToken } from "./redux/actions/authAction";
+import { showPosts } from './redux/actions/postAction'
+import { getSuggestions } from './redux/actions/suggestionAction'
 
-import { showPosts } from './redux/actions/postAction';
-import { getSuggestions } from './redux/actions/suggestionAction';
-
-import { getNotifies } from './redux/actions/notifyAction';
-import { GLOBALTYPES } from "./redux/actions/globalTypes";
-
-
+import { getNotifies } from './redux/actions/notifyAction'
+import { GLOBALTYPES } from './redux/actions/globalTypes'
 
 const App = () => {
-  const { auth, status, modal, call } = useSelector((state) => state);
-  const dispatch = useDispatch();
+  const { auth, status, modal, call } = useSelector((state) => state)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(refreshToken());
-    const socket = io();
+    dispatch(refreshToken())
+    const socket = io()
 
     dispatch({ type: GLOBALTYPES.SOCKET, payload: socket })
-    return () => socket.close();
-  }, [dispatch]);
+    return () => socket.close()
+  }, [dispatch])
 
   useEffect(() => {
     if (auth.token) {
@@ -49,22 +46,22 @@ const App = () => {
   }, [dispatch, auth.token])
 
   useEffect(() => {
-    if (!("Notification" in window)) {
-      alert("This browser does not support desktop notification");
-    }
-    else if (Notification.permission === "granted") { }
-    else if (Notification.permission !== "denied") {
+    if (!('Notification' in window)) {
+      alert('This browser does not support desktop notification')
+    } else if (Notification.permission === 'granted') {
+    } else if (Notification.permission !== 'denied') {
       Notification.requestPermission().then(function (permission) {
-        if (permission === "granted") { }
-      });
+        if (permission === 'granted') {
+        }
+      })
     }
   }, [])
-
 
   // Call - peer
   useEffect(() => {
     const newPeer = new Peer(undefined, {
-      path: '/', secure: true
+      path: '/',
+      secure: true
     })
 
     dispatch({ type: GLOBALTYPES.PEER, payload: newPeer })
@@ -81,7 +78,6 @@ const App = () => {
           {auth.token && <SocketClient />}
           {call && <CallModal />}
 
-
           <Route exact path="/" component={auth.token ? Home : Login} />
           <Route exact path="/register" component={Register} />
 
@@ -90,7 +86,7 @@ const App = () => {
         </div>
       </div>
     </Router>
-  );
-};
+  )
+}
 
-export default App;
+export default App

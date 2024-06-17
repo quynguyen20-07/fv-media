@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { login } from "../redux/actions/authAction";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { login } from '../redux/actions/authAction'
+import { useSelector, useDispatch } from 'react-redux'
 
 const Login = () => {
-  const initialState = { email: "", password: "" };
-  const [userData, setUserData] = useState(initialState);
-  const { email, password } = userData;
+  const initialState = { email: '', password: '' }
+  const [userData, setUserData] = useState(initialState)
+  const { email, password } = userData
 
-  const [typePass, setTypePass] = useState(false);
+  const [typePass, setTypePass] = useState(false)
 
-  const { auth } = useSelector(state => state);
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const { auth } = useSelector((state) => state)
+  const dispatch = useDispatch()
+  const history = useHistory()
 
   useEffect(() => {
-    if (auth.token) history.push("/");
-  }, [auth.token, history]);
+    if (auth.token) history.push('/')
+  }, [auth.token, history])
 
   const handleChangeInput = (e) => {
-    const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
-  };
+    const { name, value } = e.target
+    setUserData({ ...userData, [name]: value })
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(login(userData));
-  };
+    e.preventDefault()
+    dispatch(login(userData))
+  }
 
   return (
     <div className="loginPage">
@@ -48,7 +48,7 @@ const Login = () => {
           <label htmlFor="exampleInputPassword1">Password: </label>
           <div className="pass">
             <input
-              type={typePass ? "text" : "password"}
+              type={typePass ? 'text' : 'password'}
               className="form-control "
               id="exampleInputPassword1"
               onChange={handleChangeInput}
@@ -56,7 +56,7 @@ const Login = () => {
               name="password"
             />
             <small onClick={() => setTypePass(!typePass)}>
-              {typePass ? "Hide" : "Show"}
+              {typePass ? 'Hide' : 'Show'}
             </small>
           </div>
         </div>
@@ -70,14 +70,14 @@ const Login = () => {
           </button>
         </div>
         <p className="my-2">
-          You don't have an account ?{" "}
-          <Link to="/register" style={{ color: "tomato" }}>
+          You don't have an account ?{' '}
+          <Link to="/register" style={{ color: 'tomato' }}>
             Register an account
           </Link>
         </p>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
