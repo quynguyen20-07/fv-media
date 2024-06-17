@@ -1,0 +1,28 @@
+.post{
+  width: 100%;
+}
+.post_content {
+  overflow: auto;
+  display: flex;
+}
+.postAvt .Avt {
+  object-fit: cover;
+  cursor: pointer;
+}
+.post-H {
+  display: flex;
+  align-items: center;
+}
+.post-H span{
+  margin: 0 20px;
+}
+.post-C {
+  display: flex;
+  justify-content: center;
+}
+.post-F {
+  display: flex;
+}
+.post-F span{
+  margin: 0 10px;
+}

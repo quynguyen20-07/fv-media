@@ -1,0 +1,32 @@
+.loginPage {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loginPage .loginBtn{
+  max-width: 400px;
+  width: 100%;
+ 
+}
+
+.loginPage form {
+  background: rgb(245, 243, 243);
+  max-width: 400px;
+  width: 100%;
+  border-radius: 5px;
+  padding: 50px 25px;
+}
+
+.loginPage form .pass {
+  position: relative;
+}
+.loginPage form .pass small {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  opacity: 0.5;
+}

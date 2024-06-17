@@ -1,0 +1,86 @@
+.header {
+  width: 100%;
+  min-height: 50px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background: #f8f9fa;
+  box-shadow: 0 0 10px #ddd;
+  border: 1px solid rgb(0, 0, 0, 0.125);
+}
+
+.header .image-card {
+  padding: 15px;
+}
+
+.header .logo-Image {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.header .logo h2 {
+  font-size: 1.5rem;
+}
+.header .navbar {
+  width: 100%;
+  height: 100%;
+}
+
+.listLink {
+  list-style: none;
+}
+
+.navbarContainer {
+  width: 100%;
+  min-height: 100vh;
+  background-color: white;
+}
+
+.leftNavbar {
+  flex: 4;
+}
+
+.centerNavbar {
+  flex: 5;
+}
+
+.rightNavbar {
+  flex: 4;
+}
+
+.text {
+  margin: 20px;
+}
+/* ----------- Header Menu ---------- */
+
+.menu li {
+  opacity: 0.7;
+}
+.menu li.active {
+  opacity: 1;
+}
+.menu .dropdown-menu {
+  position: absolute;
+  left: inherit;
+  right: 0;
+}
+.menu label {
+  cursor: pointer;
+}
+.menu .notify_length {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+@media only screen and (max-width: 994px) {
+  .menu li {
+    margin: 5px;
+  }
+}

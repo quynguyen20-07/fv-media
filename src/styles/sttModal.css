@@ -1,0 +1,106 @@
+.status-modal {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+  z-index: 4;
+  top: 0;
+  left: 0;
+  background: #4444;
+}
+.status-modal form {
+  max-width: 400px;
+  width: 100%;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 5px;
+  background: #f5f5f5;
+}
+.status-modal .stt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #0004;
+  margin-bottom: 15px;
+}
+
+.stt-body textarea {
+  width: 100%;
+  min-height: 100px;
+  border: none;
+  outline: none;
+  resize: none;
+}
+.stt-body .file-input {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.stt-body i {
+  font-size: 2rem;
+  cursor: pointer;
+}
+.stt-body .file-input .file-up {
+  overflow: hidden;
+  margin: 0 10px;
+  position: relative;
+}
+.stt-body .file-input .file-up #file {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+.stt-footer button {
+  width: 100%;
+}
+.stt-body .upload-show {
+  max-height: 270px;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  place-items: center;
+  padding: 10px 5px;
+  grid-gap: 10px;
+}
+.stt-body .upload-show #file_img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.stt-body .upload-show #file_img img,
+.stt-body .upload-show #file_img video {
+  display: block;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  max-height: 100px;
+}
+.stt-body .upload-show span {
+  position: absolute;
+  top: -1px;
+  right: -2px;
+  z-index: 4;
+  background: white;
+  color: crimson;
+  padding: 3px 7px;
+  border: 1px solid rgb(179, 40, 68);
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: bolder;
+  cursor: pointer;
+}
+.stt-body .camera span {
+  position: absolute;
+  top: -10px;
+  right: 5px;
+  color: tomato;
+  font-size: 2rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+.stt-body .dropdown-menu {
+  transform: translate3d(-150px, -200px, 0px) !important;
+}

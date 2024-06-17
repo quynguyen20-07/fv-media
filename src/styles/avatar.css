@@ -1,0 +1,37 @@
+.huge-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.huge-avatar:hover {
+  opacity: 0.8;
+}
+.big-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 10px;
+}
+.big-avatar:hover {
+  opacity: 0.8;
+}
+.medium-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.medium-avatar:hover {
+  opacity: 0.8;
+}
+.small-avatar {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.small-avatar:hover {
+  opacity: 0.8;
+}
