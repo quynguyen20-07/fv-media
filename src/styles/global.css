@@ -1,0 +1,147 @@
+* {
+  padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+#theme {
+  display: none;
+}
+#theme:checked ~ * {
+  filter: invert(1);
+}
+.App {
+  width: 100%;
+  min-height: 100vh;
+  background-color: white;
+}
+.main {
+  max-width: 1000px;
+  width: 100%;
+  min-height: 100vh;
+  margin: auto;
+}
+.img {
+  object-fit: cover;
+}
+
+/*............AUTH........*/
+@import url('./auth.css');
+
+/*............Loading........*/
+@import url('./loading.css');
+
+/*............Navbar........*/
+@import url('./navbar.css');
+
+/*............Toast........*/
+/* @import url(".toast.css"); */
+
+/*............Avatar........*/
+@import url('./avatar.css');
+
+/*............Search........*/
+@import url('./search.css');
+
+/*............Profile........*/
+@import url('./profile.css');
+
+/*............Home pages........*/
+@import url('./home.css');
+
+/*............Status Modal........*/
+@import url('./sttModal.css');
+
+/*............Posts........*/
+@import url('./post.css');
+
+/*............Comments........*/
+@import url('./comment.css');
+
+/*............Post_thumb........*/
+@import url('./post_thumb.css');
+
+/*............Message........*/
+@import url('./message.css');
+
+/*............Icons........*/
+@import url('./icons.css');
+
+/*............Call........*/
+@import url('./callModal.css');
+
+.mode {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/*----------Responsive----------*/
+@media (max-width: 766px) {
+  .siderBar {
+    display: none;
+  }
+  .logo-Image {
+    display: none;
+  }
+  .header .logo {
+    display: none;
+    margin: auto;
+  }
+  .header .logo h1 {
+    font-size: 1.5rem;
+  }
+  .menu {
+    width: 100%;
+    height: 70px;
+  }
+  .menu .navbar-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .search-form {
+    width: 100%;
+    position: relative;
+    padding: 10px 30px;
+  }
+  
+  .message {
+    height: calc(100vh - 100px);
+  }
+
+  .left_mess,
+  .right_mess {
+    display: none;
+  }
+
+  .status {
+    padding: 20px 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .status {
+    height: 80px;
+  }
+  .status .sttBtn p {
+    font-size: 12px;
+  }
+  .big-avatar {
+    width: 40px;
+    height: 40px;
+  }
+  .search-form {
+    padding: 5px 10px;
+  }
+}

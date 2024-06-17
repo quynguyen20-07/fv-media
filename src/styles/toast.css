@@ -1,0 +1,9 @@
+.toast{
+    top: 5px;
+    right: 5px;
+    min-width: 200px;
+    z-index: 50;
+}
+.close{
+    outline: none;
+}
