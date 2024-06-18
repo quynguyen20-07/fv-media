@@ -1,16 +1,14 @@
-import {GLOBALTYPES} from '../actions/globalTypes'
+import { GLOBAL_TYPES } from '../actions/globalTypes'
 
-const initalState ={}
+const initialState = {}
 
-const authReducer =(state = initalState, action)=>{
-    switch(action.type){
-        case GLOBALTYPES.AUTH:
-            return action.payload;
-        default:
-            return state;
-    }
+const authReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GLOBAL_TYPES.AUTH:
+      return action.payload
+    default:
+      return state
+  }
 }
 
-
-export default authReducer;
-
+export default authReducer

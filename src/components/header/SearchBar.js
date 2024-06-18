@@ -1,50 +1,56 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getDataAPI } from "../../Utils/fetchData";
-import { GLOBALTYPES } from "../../redux/actions/globalTypes";
-import UserCard from "../UserCard";
-import loadIcon from "../../images/load.gif";
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { getDataAPI } from '../../Utils/fetchData'
+import { GLOBAL_TYPES } from '../../redux/actions/globalTypes'
+import UserCard from '../UserCard'
+import loadIcon from '../../images/load.gif'
 
 const SearchBar = (theme) => {
-  const [search, setSearch] = useState("");
-  const [users, setUsers] = useState([]);
-  const { auth } = useSelector((state) => state);
-  const dispatch = useDispatch();
-  const [load, setLoad] = useState(false);
+  const [search, setSearch] = useState('')
+  const [users, setUsers] = useState([])
+  const { auth } = useSelector((state) => state)
+  const dispatch = useDispatch()
+  const [load, setLoad] = useState(false)
 
   const handleClose = () => {
-    setSearch("");
-    setUsers([]);
-  };
+    setSearch('')
+    setUsers([])
+  }
   const handleSearch = async (e) => {
-    e.preventDefault();
-    if (!search) return;
+    e.preventDefault()
+    if (!search) return
     try {
-      setLoad(true);
-      const res = await getDataAPI(`search?username=${search}`, auth.token);
-      setUsers(res.data.users);
-      setLoad(false);
+      setLoad(true)
+      const res = await getDataAPI(`search?username=${search}`, auth.token)
+      setUsers(res.data.users)
+      setLoad(false)
     } catch (error) {
       dispatch({
-        type: GLOBALTYPES.ALERT,
+        type: GLOBAL_TYPES.ALERT,
         payload: {
-          error: error.response.data.message,
-        },
-      });
+          error: error.response.data.message
+        }
+      })
     }
-  };
+  }
 
   return (
-    <form className="search-form" onSubmit={handleSearch} theme={theme ? 'invert(1)' : 'invert(0)'}>
+    <form
+      className="search-form"
+      onSubmit={handleSearch}
+      theme={theme ? 'invert(1)' : 'invert(0)'}
+    >
       <input
         type="text"
         name="search"
-        value={search} id="search"
+        value={search}
+        id="search"
         className="form-control rounded-pill"
         placeholder="Enter to Search"
         onChange={(e) =>
-          setSearch(e.target.value.toLowerCase().replace(/ /g, ""))
-        } />
+          setSearch(e.target.value.toLowerCase().replace(/ /g, ''))
+        }
+      />
 
       <div
         className="close-search"
@@ -53,7 +59,7 @@ const SearchBar = (theme) => {
       >
         &times;
       </div>
-      <button type="submit" style={{ display: "none" }}>
+      <button type="submit" style={{ display: 'none' }}>
         Search
       </button>
 
@@ -70,7 +76,7 @@ const SearchBar = (theme) => {
       </div>
       {load && <img className="loading" src={loadIcon} alt="loading" />}
     </form>
-  );
-};
+  )
+}
 
-export default SearchBar;
+export default SearchBar

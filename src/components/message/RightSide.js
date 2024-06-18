@@ -4,14 +4,19 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
 import MsgDisplay from './MsgDisplay'
 import Icons from '../Icons'
-import { GLOBALTYPES } from '../../redux/actions/globalTypes'
+import { GLOBAL_TYPES } from '../../redux/actions/globalTypes'
 import { imageShow, videoShow } from '../../Utils/mediaShow'
 import { imageUpload } from '../../Utils/imagesUpload'
-import { addMessage, getMessages, loadMoreMessages, deleteConversation } from '../../redux/actions/messageAction'
+import {
+  addMessage,
+  getMessages,
+  loadMoreMessages,
+  deleteConversation
+} from '../../redux/actions/messageAction'
 import LoadIcon from '../../images/loading.gif'
 
 const RightSide = () => {
-  const { auth, message, theme, socket, peer } = useSelector(state => state)
+  const { auth, message, theme, socket, peer } = useSelector((state) => state)
   const dispatch = useDispatch()
 
   const { id } = useParams()
@@ -31,7 +36,7 @@ const RightSide = () => {
   const history = useHistory()
 
   useEffect(() => {
-    const newData = message.data.find(item => item._id === id)
+    const newData = message.data.find((item) => item._id === id)
     if (newData) {
       setData(newData.messages)
       setResult(newData.result)
@@ -45,27 +50,27 @@ const RightSide = () => {
         refDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
       }, 50)
 
-      const newUser = message.users.find(user => user._id === id)
+      const newUser = message.users.find((user) => user._id === id)
       if (newUser) setUser(newUser)
     }
   }, [message.users, id])
 
   const handleChangeMedia = (e) => {
     const files = [...e.target.files]
-    let err = ""
+    let err = ''
     let newMedia = []
 
-    files.forEach(file => {
-      if (!file) return err = "File does not exist."
+    files.forEach((file) => {
+      if (!file) return (err = 'File does not exist.')
 
       if (file.size > 1024 * 1024 * 5) {
-        return err = "The image/video largest is 5mb."
+        return (err = 'The image/video largest is 5mb.')
       }
 
       return newMedia.push(file)
     })
 
-    if (err) dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } })
+    if (err) dispatch({ type: GLOBAL_TYPES.ALERT, payload: { error: err } })
     setMedia([...media, ...newMedia])
   }
 
@@ -77,12 +82,12 @@ const RightSide = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!text.trim() && media.length === 0) return;
+    if (!text.trim() && media.length === 0) return
     setText('')
     setMedia([])
     setLoadMedia(true)
 
-    let newArr = [];
+    let newArr = []
     if (media.length > 0) newArr = await imageUpload(media)
 
     const msg = {
@@ -102,26 +107,31 @@ const RightSide = () => {
 
   useEffect(() => {
     const getMessagesData = async () => {
-      if (message.data.every(item => item._id !== id)) {
+      if (message.data.every((item) => item._id !== id)) {
         await dispatch(getMessages({ auth, id }))
         setTimeout(() => {
-          refDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+          refDisplay.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'end'
+          })
         }, 50)
       }
     }
     getMessagesData()
   }, [id, dispatch, auth, message.data])
 
-
   // Load More
   useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        setIsLoadMore(p => p + 1)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsLoadMore((p) => p + 1)
+        }
+      },
+      {
+        threshold: 0.1
       }
-    }, {
-      threshold: 0.1
-    })
+    )
 
     observer.observe(pageEnd.current)
   }, [setIsLoadMore])
@@ -150,9 +160,12 @@ const RightSide = () => {
     const msg = {
       sender: auth.user._id,
       recipient: _id,
-      avatar, username, fullname, video
+      avatar,
+      username,
+      fullname,
+      video
     }
-    dispatch({ type: GLOBALTYPES.CALL, payload: msg })
+    dispatch({ type: GLOBAL_TYPES.CALL, payload: msg })
   }
 
   const callUser = ({ video }) => {
@@ -161,7 +174,10 @@ const RightSide = () => {
     const msg = {
       sender: _id,
       recipient: user._id,
-      avatar, username, fullname, video
+      avatar,
+      username,
+      fullname,
+      video
     }
 
     if (peer.open) msg.peerId = peer._id
@@ -181,96 +197,107 @@ const RightSide = () => {
 
   return (
     <>
-      <div className="message_header" style={{ cursor: 'pointer' }} >
-        {
-          user.length !== 0 &&
+      <div className="message_header" style={{ cursor: 'pointer' }}>
+        {user.length !== 0 && (
           <UserCard user={user}>
-            <div className=' float-right'>
-              <i className="fas fa-phone-alt"
-                onClick={handleAudioCall} />
+            <div className=" float-right">
+              <i className="fas fa-phone-alt" onClick={handleAudioCall} />
 
-              <i className="fas fa-video mx-3"
-                onClick={handleVideoCall} />
+              <i className="fas fa-video mx-3" onClick={handleVideoCall} />
 
-              <i className="fas fa-trash text-danger"
-                onClick={handleDeleteConversation} />
+              <i
+                className="fas fa-trash text-danger"
+                onClick={handleDeleteConversation}
+              />
             </div>
           </UserCard>
-        }
+        )}
       </div>
 
-      <div className="chat_container p-2"
-        style={{ height: media.length > 0 ? 'calc(100% - 180px)' : '' }} >
+      <div
+        className="chat_container p-2"
+        style={{ height: media.length > 0 ? 'calc(100% - 180px)' : '' }}
+      >
         <div className="chat_display" ref={refDisplay}>
           <button style={{ marginTop: '-25px', opacity: 0 }} ref={pageEnd}>
             Load more
           </button>
 
-          {
-            data.map((msg, index) => (
-              <div key={index}>
-                {
-                  msg.sender !== auth.user._id &&
-                  <div className="chat_row other_message">
-                    <MsgDisplay user={user} msg={msg} theme={theme} />
-                  </div>
-                }
+          {data.map((msg, index) => (
+            <div key={index}>
+              {msg.sender !== auth.user._id && (
+                <div className="chat_row other_message">
+                  <MsgDisplay user={user} msg={msg} theme={theme} />
+                </div>
+              )}
 
-                {
-                  msg.sender === auth.user._id &&
-                  <div className="chat_row you_message">
-                    <MsgDisplay user={auth.user} msg={msg} theme={theme} data={data} />
-                  </div>
-                }
-              </div>
-            ))
-          }
+              {msg.sender === auth.user._id && (
+                <div className="chat_row you_message">
+                  <MsgDisplay
+                    user={auth.user}
+                    msg={msg}
+                    theme={theme}
+                    data={data}
+                  />
+                </div>
+              )}
+            </div>
+          ))}
 
-
-          {
-            loadMedia &&
+          {loadMedia && (
             <div className="chat_row you_message">
               <img src={LoadIcon} alt="loading" />
             </div>
-          }
-
+          )}
         </div>
       </div>
 
-      <div className="show_media" style={{ display: media.length > 0 ? 'grid' : 'none' }} >
-        {
-          media.map((item, index) => (
-            <div key={index} id="file_media">
-              {
-                item.type.match(/video/i)
-                  ? videoShow(URL.createObjectURL(item), theme)
-                  : imageShow(URL.createObjectURL(item), theme)
-              }
-              <span onClick={() => handleDeleteMedia(index)} >&times;</span>
-            </div>
-          ))
-        }
+      <div
+        className="show_media"
+        style={{ display: media.length > 0 ? 'grid' : 'none' }}
+      >
+        {media.map((item, index) => (
+          <div key={index} id="file_media">
+            {item.type.match(/video/i)
+              ? videoShow(URL.createObjectURL(item), theme)
+              : imageShow(URL.createObjectURL(item), theme)}
+            <span onClick={() => handleDeleteMedia(index)}>&times;</span>
+          </div>
+        ))}
       </div>
 
-      <form className="chat_input" onSubmit={handleSubmit} >
-        <input type="text" placeholder="Enter you message..."
-          value={text} onChange={e => setText(e.target.value)}
+      <form className="chat_input" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Enter you message..."
+          value={text}
+          onChange={(e) => setText(e.target.value)}
           style={{
             filter: theme ? 'invert(1)' : 'invert(0)',
             background: theme ? '#040404' : '',
             color: theme ? 'white' : ''
-          }} />
+          }}
+        />
 
         <Icons setContent={setText} content={text} theme={theme} />
 
         <div className="file_upload">
           <i className="fas fa-image text-danger" />
-          <input type="file" name="file" id="file"
-            multiple accept="image/*,video/*" onChange={handleChangeMedia} />
+          <input
+            type="file"
+            name="file"
+            id="file"
+            multiple
+            accept="image/*,video/*"
+            onChange={handleChangeMedia}
+          />
         </div>
 
-        <button type="submit" className="material-icons"
-          disabled={(text || media.length > 0) ? false : true}>
+        <button
+          type="submit"
+          className="material-icons"
+          disabled={text || media.length > 0 ? false : true}
+        >
           near_me
         </button>
       </form>

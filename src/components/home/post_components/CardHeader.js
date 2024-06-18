@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import Avatar from '../../Avatar'
 
-import { GLOBALTYPES } from '../../../redux/actions/globalTypes'
+import { GLOBAL_TYPES } from '../../../redux/actions/globalTypes'
 import { deletePost } from '../../../redux/actions/postAction'
 
 const CardHeader = ({ post }) => {
@@ -37,7 +37,7 @@ const CardHeader = ({ post }) => {
 
   const handleEditPost = () => {
     dispatch({
-      type: GLOBALTYPES.STATUS,
+      type: GLOBAL_TYPES.STATUS,
       payload: { ...post, onEdit: true }
     })
   }

@@ -1,109 +1,121 @@
-import { GLOBALTYPES } from "./globalTypes";
-import { postDataAPI } from "../../Utils/fetchData";
-import valid from "../../Utils/valid";
+import { GLOBAL_TYPES } from './globalTypes'
+import { postDataAPI } from '../../Utils/fetchData'
+import valid from '../../Utils/valid'
+import {
+  getStorageItem,
+  removeStorageItem,
+  setStorageItem,
+  STORAGE_KEY
+} from '../../helper/localStorage'
 
 export const login = (data) => async (dispatch) => {
   try {
-    dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
-    const res = await postDataAPI("login", data);
+    dispatch({ type: GLOBAL_TYPES.ALERT, payload: { loading: true } })
+    const res = await postDataAPI('login', data)
 
     dispatch({
-      type: GLOBALTYPES.AUTH,
+      type: GLOBAL_TYPES.AUTH,
       payload: {
         token: res.data.access_token,
-        user: res.data.user,
-      },
-    });
+        user: res.data.user
+      }
+    })
 
-    localStorage.setItem("firstLogin", true);
+    setStorageItem(STORAGE_KEY.ACCESS_TOKEN, res.data.access_token)
+    setStorageItem(STORAGE_KEY.REFRESH_TOKEN, res.data.refresh_token)
     dispatch({
-      type: GLOBALTYPES.ALERT,
+      type: GLOBAL_TYPES.ALERT,
       payload: {
-        success: res.data.message,
-      },
-    });
+        success: res.data.message
+      }
+    })
   } catch (error) {
     dispatch({
-      type: GLOBALTYPES.ALERT,
+      type: GLOBAL_TYPES.ALERT,
       payload: {
-        error: error.response.data.message,
-      },
-    });
+        error: error.response.data.message
+      }
+    })
   }
-};
+}
 
 export const refreshToken = () => async (dispatch) => {
-  const firstLogin = localStorage.getItem("firstLogin");
-  if (firstLogin) {
-    dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+  const isAuth = getStorageItem(STORAGE_KEY.ACCESS_TOKEN)
+  if (isAuth) {
+    dispatch({ type: GLOBAL_TYPES.ALERT, payload: { loading: true } })
     try {
-      const res = await postDataAPI("refresh_token");
+      const res = await postDataAPI('refresh_token')
+
+      setStorageItem(STORAGE_KEY.ACCESS_TOKEN, res.data.access_token)
+      setStorageItem(STORAGE_KEY.REFRESH_TOKEN, res.data.refresh_token)
       dispatch({
-        type: GLOBALTYPES.AUTH,
+        type: GLOBAL_TYPES.AUTH,
         payload: {
           token: res.data.access_token,
-          user: res.data.user,
-        },
-      });
-      dispatch({ type: GLOBALTYPES.ALERT, payload: {} });
+          user: res.data.user
+        }
+      })
+      dispatch({ type: GLOBAL_TYPES.ALERT, payload: {} })
     } catch (error) {
       dispatch({
-        type: GLOBALTYPES.ALERT,
+        type: GLOBAL_TYPES.ALERT,
         payload: {
           error: error.response.data.message
         }
-      });
+      })
     }
   }
-};
+}
 
 export const register = (data) => async (dispatch) => {
-  const checkValidate = valid(data);
+  const checkValidate = valid(data)
   if (checkValidate.errorLength > 0)
     return dispatch({
-      type: GLOBALTYPES.ALERT,
+      type: GLOBAL_TYPES.ALERT,
       payload: checkValidate.errorMsg
-    });
+    })
   try {
-    dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
-    const res = await postDataAPI("register", data);
+    dispatch({ type: GLOBAL_TYPES.ALERT, payload: { loading: true } })
+    const res = await postDataAPI('register', data)
 
     dispatch({
-      type: GLOBALTYPES.AUTH,
+      type: GLOBAL_TYPES.AUTH,
       payload: {
         token: res.data.access_token,
-        user: res.data.user,
-      },
-    });
+        user: res.data.user
+      }
+    })
 
-    localStorage.setItem("firstLogin", true);
+    setStorageItem(STORAGE_KEY.ACCESS_TOKEN, res.data.access_token)
+    setStorageItem(STORAGE_KEY.REFRESH_TOKEN, res.data.refresh_token)
     dispatch({
-      type: GLOBALTYPES.ALERT,
+      type: GLOBAL_TYPES.ALERT,
       payload: {
-        success: res.data.msg,
-      },
-    });
+        success: res.data.msg
+      }
+    })
   } catch (error) {
     dispatch({
-      type: GLOBALTYPES.ALERT,
+      type: GLOBAL_TYPES.ALERT,
       payload: {
-        error: error.response.data.msg,
-      },
-    });
+        error: error.response.data.msg
+      }
+    })
   }
-};
+}
 
 export const logout = () => async (dispatch) => {
   try {
-    localStorage.removeItem("firstLogin");
-    await postDataAPI("logout");
-    window.location.href = "/";
+    removeStorageItem(STORAGE_KEY.ACCESS_TOKEN)
+    removeStorageItem(STORAGE_KEY.REFRESH_TOKEN)
+    await postDataAPI('logout')
+    window.location.href = '/'
   } catch (error) {
     dispatch({
-      type: GLOBALTYPES.ALERT,
+      type: GLOBAL_TYPES.ALERT,
       payload: {
-        error: error.response.data.msg,
-      },
-    });
+        error: error.response.data.msg
+      }
+    })
   }
-};
+}

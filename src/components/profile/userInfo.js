@@ -1,41 +1,40 @@
-import React, { useEffect, useState } from "react";
-import { GLOBALTYPES } from "../../redux/actions/globalTypes";
-import Avatar from "../Avatar";
-import EditProfile from "./EditProfile";
-import FollowBtn from "./FollowBtn";
-import Followers from "./Followers";
-import Following from "./Following";
+import React, { useEffect, useState } from 'react'
+import { GLOBAL_TYPES } from '../../redux/actions/globalTypes'
+import Avatar from '../Avatar'
+import EditProfile from './EditProfile'
+import FollowBtn from './FollowBtn'
+import Followers from './Followers'
+import Following from './Following'
 
 const UserInfo = ({ id, dispatch, auth, profile }) => {
-  const [userInfo, setUserInfo] = useState([]);
-  const [edit, setEdit] = useState(false);
+  const [userInfo, setUserInfo] = useState([])
+  const [edit, setEdit] = useState(false)
 
-  const [showFollowers, setShowFollowers] = useState(false);
-  const [showFollowing, setShowFollowing] = useState(false);
+  const [showFollowers, setShowFollowers] = useState(false)
+  const [showFollowing, setShowFollowing] = useState(false)
 
   useEffect(() => {
     if (id === auth.user._id) {
-      setUserInfo([auth.user]);
+      setUserInfo([auth.user])
     } else {
-
-      const newUserInf = profile.users.filter((user) => user._id === id);
-      setUserInfo(newUserInf);
+      const newUserInf = profile.users.filter((user) => user._id === id)
+      setUserInfo(newUserInf)
     }
-  }, [id, auth, dispatch, profile.users]);
+  }, [id, auth, dispatch, profile.users])
 
   useEffect(() => {
     if (showFollowers || showFollowing || edit) {
       dispatch({
-        type: GLOBALTYPES.MODAL, payload: true
+        type: GLOBAL_TYPES.MODAL,
+        payload: true
       })
     } else {
       dispatch({
-        type: GLOBALTYPES.MODAL, payload: false
+        type: GLOBAL_TYPES.MODAL,
+        payload: false
       })
     }
-
   }, [showFollowers, showFollowing, edit, dispatch])
-
 
   return (
     <div className="info border-bottom">
@@ -60,14 +59,14 @@ const UserInfo = ({ id, dispatch, auth, profile }) => {
             <div className="follower_btn">
               <span
                 className="mr-4"
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
                 onClick={() => setShowFollowers(true)}
               >
                 {user.followers.length} Followers
               </span>
               <span
                 className="ml-4"
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
                 onClick={() => setShowFollowing(true)}
               >
                 {user.following.length} Following
@@ -86,15 +85,21 @@ const UserInfo = ({ id, dispatch, auth, profile }) => {
           </div>
           {edit && <EditProfile setEdit={setEdit} />}
           {showFollowers && (
-            <Followers users={user.followers} setShowFollowers={setShowFollowers} />
+            <Followers
+              users={user.followers}
+              setShowFollowers={setShowFollowers}
+            />
           )}
           {showFollowing && (
-            <Following users={user.following} setShowFollowing={setShowFollowing} />
+            <Following
+              users={user.following}
+              setShowFollowing={setShowFollowing}
+            />
           )}
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default UserInfo;
+export default UserInfo

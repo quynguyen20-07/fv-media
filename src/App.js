@@ -23,7 +23,7 @@ import { showPosts } from './redux/actions/postAction'
 import { getSuggestions } from './redux/actions/suggestionAction'
 
 import { getNotifies } from './redux/actions/notifyAction'
-import { GLOBALTYPES } from './redux/actions/globalTypes'
+import { GLOBAL_TYPES } from './redux/actions/globalTypes'
 
 const App = () => {
   const { auth, status, modal, call } = useSelector((state) => state)
@@ -31,19 +31,19 @@ const App = () => {
 
   useEffect(() => {
     dispatch(refreshToken())
-    const socket = io()
+    const socket = io(process.env.REACT_APP_WS_URL)
 
-    dispatch({ type: GLOBALTYPES.SOCKET, payload: socket })
+    dispatch({ type: GLOBAL_TYPES.SOCKET, payload: socket })
     return () => socket.close()
   }, [dispatch])
 
   useEffect(() => {
-    if (auth.token) {
+    if (auth?.token) {
       dispatch(showPosts(auth.token))
       dispatch(getSuggestions(auth.token))
       dispatch(getNotifies(auth.token))
     }
-  }, [dispatch, auth.token])
+  }, [dispatch, auth?.token])
 
   useEffect(() => {
     if (!('Notification' in window)) {
@@ -64,7 +64,7 @@ const App = () => {
       secure: true
     })
 
-    dispatch({ type: GLOBALTYPES.PEER, payload: newPeer })
+    dispatch({ type: GLOBAL_TYPES.PEER, payload: newPeer })
   }, [dispatch])
 
   return (

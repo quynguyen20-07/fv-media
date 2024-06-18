@@ -1,46 +1,45 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { checkImage } from "../../Utils/imagesUpload";
-import { GLOBALTYPES } from "../../redux/actions/globalTypes";
-import { updateProfile } from "../../redux/actions/profileAction";
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { checkImage } from '../../Utils/imagesUpload'
+import { GLOBAL_TYPES } from '../../redux/actions/globalTypes'
+import { updateProfile } from '../../redux/actions/profileAction'
 
 const EditProfile = ({ setEdit }) => {
   const initState = {
-    fullname: "",
-    number: "",
-    address: "",
-    website: "",
-    status: "",
-    gender: "",
-  };
-  const [userData, setUserData] = useState(initState);
-  const { fullname, number, address, website, status, gender } = userData;
-  const [avatar, setAvatar] = useState("");
+    fullname: '',
+    number: '',
+    address: '',
+    website: '',
+    status: '',
+    gender: ''
+  }
+  const [userData, setUserData] = useState(initState)
+  const { fullname, number, address, website, status, gender } = userData
+  const [avatar, setAvatar] = useState('')
 
-  const { auth, theme } = useSelector((state) => state);
-  const dispatch = useDispatch();
+  const { auth, theme } = useSelector((state) => state)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    setUserData(auth.user);
-  }, [auth.user]);
+    setUserData(auth.user)
+  }, [auth.user])
 
   const changeAvatar = (e) => {
-    const file = e.target.files[0];
-    const err = checkImage(file);
+    const file = e.target.files[0]
+    const err = checkImage(file)
     if (err)
-      return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } });
-    setAvatar(file);
-  };
+      return dispatch({ type: GLOBAL_TYPES.ALERT, payload: { error: err } })
+    setAvatar(file)
+  }
   const handleInput = (e) => {
-    const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
-  };
+    const { name, value } = e.target
+    setUserData({ ...userData, [name]: value })
+  }
   const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(updateProfile({ userData, avatar, auth }));
+    e.preventDefault()
+    dispatch(updateProfile({ userData, avatar, auth }))
     setEdit(false)
-  };
-   
+  }
 
   return (
     <div className="edit_profile">
@@ -55,7 +54,7 @@ const EditProfile = ({ setEdit }) => {
           <img
             src={avatar ? URL.createObjectURL(avatar) : auth.user.avatar}
             alt="avatar"
-            style={{ filter: theme ? "invert(1" : "invert(0)" }}
+            style={{ filter: theme ? 'invert(1' : 'invert(0)' }}
           />
           <span>
             <i className="fas fa-camera" />
@@ -83,9 +82,9 @@ const EditProfile = ({ setEdit }) => {
             <small
               className="text-danger position-absolute"
               style={{
-                top: "50%",
-                right: "56%",
-                transform: "translateY(-50%)",
+                top: '50%',
+                right: '56%',
+                transform: 'translateY(-50%)'
               }}
             >
               {fullname.length}/25
@@ -163,16 +162,12 @@ const EditProfile = ({ setEdit }) => {
             <option value="other">Other</option>
           </select>
         </div>
-        <button
-          className="btn btn-info w-100"
-          type="submit"
-          
-        >
+        <button className="btn btn-info w-100" type="submit">
           Save
         </button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default EditProfile;
+export default EditProfile

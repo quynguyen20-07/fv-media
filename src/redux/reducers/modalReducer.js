@@ -1,15 +1,14 @@
-import {GLOBALTYPES} from '../actions/globalTypes'
+import { GLOBAL_TYPES } from '../actions/globalTypes'
 
-const initalState = false
+const initialState = false
 
-const modalReducer =(state = initalState, action)=>{
-    switch(action.type){
-        case GLOBALTYPES.MODAL:
-            return action.payload;
-        default:
-            return state;
-    }
+const modalReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GLOBAL_TYPES.MODAL:
+      return action.payload
+    default:
+      return state
+  }
 }
 
-
-export default modalReducer;
+export default modalReducer
